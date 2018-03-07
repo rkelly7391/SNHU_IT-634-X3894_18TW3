@@ -1,0 +1,210 @@
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+/**
+ * Servlet implementation class RyanFlight
+ * Will allow the user to search for a flight
+ * @author ryan.kelly5
+ */
+@WebServlet(description = "RyanFlightSearches", urlPatterns = { "/FlightSearch" })
+public class RyanFlightSearchServlet extends HttpServlet {
+private Map<Integer, RyanFlightSearch> flightDatabase = new LinkedHashMap<>();
+	
+	private static final long serialVersionUID = 1L;
+
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+        if(action == null)
+            action = "search";
+        switch(action)
+        {
+            case "search":
+                this.showFlightSearchForm(response);
+                break;
+            case "list":
+            	this.listFlights(request, response);
+                break;
+            default:
+                this.showFlightSearchForm(response);
+                break;
+        }
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		String action = request.getParameter("action");
+		
+        if(action == null)
+            action = "list";
+        switch(action)
+        {
+            case "create":
+                //this.createTicket(request, response);
+                break;
+            case "list":
+            	this.listFlights(request, response);
+            	break;
+            default:
+                //response.sendRedirect("tickets");
+                break;
+        }
+	}
+
+	private void showFlightSearchForm(HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter writer = this.writeHeader(response);
+		
+		writer.append("<h2>Search for a Flight</h2>\r\n");
+        writer.append("<form method=\"POST\" action=\"search\" ")
+              .append(">\r\n");
+        writer.append("<input type=\"hidden\" name=\"action\" ")
+              .append("value=\"list\"/>\r\n");
+        writer.append("Departing from:<br/>\r\n");
+        writer.append("<input type=\"text\" list=\"departure\" name=\"departLocationName\"/><br/><br/>\r\n"); //list=\"departure\"
+        writer.append("Arriving in:<br/>\r\n");
+        writer.append("<input type=\"text\" list=\"destinations\" name=\"arrivalLocationName\"/><br/><br/>\r\n"); // list=\"destinations\" 
+        writer.append("Departure Date:<br/>\r\n");
+        writer.append("<input type=\"date\" name=\"departureDate\"/><br/><br/>\r\n");
+        writer.append("Number of Tickets<br/>\r\n");
+        writer.append("<select name=\"numberOfTickets\">");
+        	writer.append("<option value=\"1\">1</option>");
+        	writer.append("<option value=\"2\">2</option>");
+        	writer.append("<option value=\"3\">3</option>");
+        	writer.append("<option value=\"4\">4</option>");
+        	writer.append("<option value=\"5\">5</option>");
+        	writer.append("<option value=\"6\">6</option>");
+        	writer.append("<option value=\"7\">7</option>");
+        	writer.append("<option value=\"8\">8</option>");
+        	writer.append("<option value=\"9\">9</option>");
+        	writer.append("<option value=\"10\">10</option>");
+        writer.append("</select>");
+        writer.append("<br/><br/>\r\n");
+        writer.append("<input type=\"submit\" value=\"Submit\"/>\r\n");
+        
+        //Build these out of the database later
+        writer.append("<datalist id=\"departure\">");
+        	writer.append("<option value=\"New York\">");
+        writer.append("</datalist>");
+        
+        writer.append("<datalist id=\"destinations\">");
+        	writer.append("<option value=\"Paris\">");
+        writer.append("</datalist>");
+        writer.append("</form>\r\n");
+        this.writeFooter(writer);
+	}
+	
+	
+	
+	private void listFlights(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException
+    {
+		String departLocationName = request.getParameter("departLocationName");
+		String arrivalLocationName = request.getParameter("arrivalLocationName");
+		String departureDate = request.getParameter("departureDate");
+		String numberOfTickets = request.getParameter("numberOfTickets");
+		
+		LocalDate ldDepartureDate;
+		int iTickets;
+		
+		//Convert strings into appropriate variable types
+		if(departureDate == null) {
+			ldDepartureDate = LocalDate.now();
+		}
+		else {
+			ldDepartureDate = LocalDate.parse(departureDate);
+		}
+		
+		if(numberOfTickets == null) {
+			iTickets = 0;
+		}
+		else {
+			iTickets = Integer.parseInt(numberOfTickets);
+		}
+		
+		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+    	DateTimeFormatter timeFormat = DateTimeFormatter.ofPattern("HH:mm");
+        PrintWriter writer = this.writeHeader(response);
+        
+        //Load the mock flight database
+        this.buildFlights();
+        
+        writer.append("<h2>Flights:</h2>\r\n");
+        
+        //Display search parameters
+        writer.append("<h3>From: ").append(departLocationName);
+        writer.append(" - To: ").append(arrivalLocationName);
+        writer.append("<br/>Departing on: ").append(ldDepartureDate.format(dateFormat));
+        writer.append(" - ").append(Integer.toString(iTickets)).append(" or more tickets available.");
+        writer.append("</h3>");
+        if(this.flightDatabase.size() == 0)
+            writer.append("<i>There are no flights available.</i>\r\n");
+        else
+        {
+            for(int id : this.flightDatabase.keySet())
+            {
+                String idString = Integer.toString(id);
+                RyanFlightSearch flight = this.flightDatabase.get(id);
+                //Filter the map down to flights matching the search parameters
+                if(flight.From().equals(departLocationName) && flight.To().equals(arrivalLocationName) && flight.SeatsAvailable() >= iTickets) {
+                	if(flight.DepartureDate().equals(ldDepartureDate) || flight.DepartureDate().isAfter(ldDepartureDate)) {
+                		writer.append(": <a href=\"flights?action=view&flightId=")
+                			.append(idString).append("\">").append("Flight #").append(idString).append("</a> ")
+                			.append(flight.DepartureDate().format(dateFormat))
+                			.append(" (Departure Time: ").append(flight.DepartureTime().format(timeFormat))
+                			.append(")<br/>\r\n");
+                	}
+                }
+            }
+        }
+
+        this.writeFooter(writer);
+    }
+	
+	private void buildFlights() { //Builds a placeholder Map of flights
+        RyanFlightSearch flight0 = new RyanFlightSearch("New York", "Paris", LocalDate.parse("2018-05-02"), LocalTime.parse("08:30"),1);
+        RyanFlightSearch flight1 = new RyanFlightSearch("New York", "Paris", LocalDate.parse("2018-05-02"), LocalTime.parse("09:15"),5);
+        RyanFlightSearch flight2 = new RyanFlightSearch("New York", "Paris", LocalDate.parse("2018-05-02"), LocalTime.parse("11:00"),9);
+        RyanFlightSearch flight3 = new RyanFlightSearch("New York", "Paris", LocalDate.parse("2018-05-02"), LocalTime.parse("13:45"),4);
+        RyanFlightSearch flight4 = new RyanFlightSearch("New York", "Paris", LocalDate.parse("2018-05-02"), LocalTime.parse("16:10"),7);
+        RyanFlightSearch flight5 = new RyanFlightSearch("New York", "Paris", LocalDate.parse("2018-05-02"), LocalTime.parse("22:00"),2);        
+
+        this.flightDatabase.put(1, flight0);
+        this.flightDatabase.put(2, flight1);
+        this.flightDatabase.put(3, flight2);
+        this.flightDatabase.put(4, flight3);
+        this.flightDatabase.put(5, flight4);
+        this.flightDatabase.put(6, flight5);
+
+	}
+	
+	private PrintWriter writeHeader(HttpServletResponse response)
+            throws ServletException, IOException
+    {
+        response.setContentType("text/html");
+        response.setCharacterEncoding("UTF-8");
+
+        PrintWriter writer = response.getWriter();
+        writer.append("<!DOCTYPE html>\r\n")
+              .append("<html>\r\n")
+              .append("    <head>\r\n")
+              .append("        <title>Customer Support</title>\r\n")
+              .append("    </head>\r\n")
+              .append("    <body>\r\n");
+
+        return writer;
+    }
+
+    private void writeFooter(PrintWriter writer)
+    {
+        writer.append("    </body>\r\n").append("</html>\r\n");
+    }
+}

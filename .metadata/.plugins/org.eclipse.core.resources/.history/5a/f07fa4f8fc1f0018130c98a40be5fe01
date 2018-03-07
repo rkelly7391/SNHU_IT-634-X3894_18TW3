@@ -1,0 +1,12 @@
+public class RyanFlightSearch {
+
+	
+	//Create global variables that will be used within the class
+	private String flightNumber = null;
+	private String flightSource = null;
+	private String flightDest = null;
+	private String FlightTime = null;
+	private String numberOfSeatsAviable = null;
+	private String numberofSeatsRequested = null;
+	
+}

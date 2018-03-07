@@ -1,0 +1,27 @@
+
+Mar 04, 2018 16:10:29.67 NEW SESSION
+Mar 04, 2018 16:10:29.67 [6808:3764:0304/161029.674:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:16:31.95 [5172:4124:0304/161631.953:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:21:11.45 [4804:8296:0304/162111.453:ERROR:gpu_process_host.cc(974)] Bad parenting request from gpu process.
+Mar 04, 2018 16:21:11.47 [4804:8980:0304/162111.468:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:21:57.21 [4604:2064:0304/162157.211:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:29:44.63 [4956:4668:0304/162944.637:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:38:14.51 [5280:7836:0304/163814.509:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:50:30.96 [4448:7640:0304/165030.969:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:50:59.64 [6600:4176:0304/165059.646:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:58:40.17 [8028:5572:0304/165840.170:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 16:59:50.72 [6704:2028:0304/165950.723:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 17:10:06.41 [7024:7336:0304/171006.411:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 17:12:03.10 [8116:7688:0304/171203.109:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 17:14:15.68 [5504:6756:0304/171415.689:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 17:19:43.56 [8844:8864:0304/171943.567:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 17:32:06.67 [7532:2960:0304/173206.677:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 18:04:21.31 [4692:4144:0304/180421.313:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 18:12:26.43 [6172:6376:0304/181226.437:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 18:14:46.31 [6324:5736:0304/181446.316:ERROR:gpu_process_host.cc(974)] Bad parenting request from gpu process.
+Mar 04, 2018 18:14:46.32 [6324:6856:0304/181446.319:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 18:25:31.13 [5608:4792:0304/182531.131:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 18:30:30.29 [8708:232:0304/183030.291:ERROR:gpu_process_host.cc(974)] Bad parenting request from gpu process.
+Mar 04, 2018 18:30:30.31 [8708:2644:0304/183030.295:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.
+Mar 04, 2018 18:39:53.25 [536:1664:0304/183953.250:ERROR:gpu_process_host.cc(974)] Bad parenting request from gpu process.
+Mar 04, 2018 18:39:53.26 [536:8228:0304/183953.259:ERROR:gpu_process_transport_factory.cc(1009)] Lost UI shared context.

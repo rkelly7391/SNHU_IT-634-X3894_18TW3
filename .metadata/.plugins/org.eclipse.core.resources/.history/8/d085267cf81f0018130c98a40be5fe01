@@ -1,0 +1,123 @@
+import java.time.LocalDate;
+import java.time.LocalTime;
+
+public class RyanFlightSearch {
+	private String flightFrom;
+	private String flightTo;
+	private LocalDate flightDepartureDate;
+	private LocalTime flightDepartureTime;
+	private int flightSeatsAvailable;
+	
+	/*
+	 * Constructor to create a blank instance of the class
+	 */
+	public RyanFlightSearch() {
+		flightFrom = "";
+		flightTo = "";
+		flightDepartureDate = LocalDate.now(); 
+		flightDepartureTime = LocalTime.now();
+		flightSeatsAvailable = 0;
+	}
+	
+	/*
+	 * Constrcutor to create an instance of the class with parameters
+	 * @param The Starting point, destination, departure date, departure time, and seats available for the flight
+	 */
+	public RyanFlightSearch(String newFrom, String newTo, LocalDate newDepartureDate, LocalTime newDepartureTime, int newSeatsAvailable) {
+		flightFrom = newFrom;
+		flightTo = newTo;
+		flightDepartureDate = newDepartureDate; 
+		flightDepartureTime = newDepartureTime;
+		if(newSeatsAvailable > 0) {
+			flightSeatsAvailable = newSeatsAvailable;
+		}
+		else {
+			flightSeatsAvailable = 0;
+		}
+	}
+	
+	/*
+	 * Accessor for the starting point of the flight
+	 * @return Flight's starting point
+	 */
+	public String From() {
+		return flightFrom;
+	}
+	
+	/*
+	 * Mutator for the starting point of the flight
+	 * @param Name of the starting point
+	 */
+	public void setFlightFrom(String newFlightFrom) {
+		flightFrom = newFlightFrom;
+	}
+	
+	/*
+	 * Accessor for the destination of the flight
+	 * @return Flight's destination
+	 */
+	public String To() {
+		return flightTo;
+	}
+	
+	/*
+	 * Mutator for the destination of the flight
+	 * @param Name of the destination
+	 */
+	public void setTo(String newFlightTo) {
+		flightTo = newFlightTo;
+	}
+	
+	/*
+	 * Accessor for the departure date of the flight
+	 * @return Flight's departure date
+	 */
+	public LocalDate DepartureDate() {
+		return flightDepartureDate;
+	}
+	
+	/*
+	 * Mutator for the departure date of the flight
+	 * @param the departure date
+	 */
+	public void setDepartureDate(LocalDate newDepartureDate) {
+		flightDepartureDate = newDepartureDate;
+	}
+	
+	/*
+	 * Accessor for the departure time of the flight
+	 * @return Flight's departure time
+	 */
+	public LocalTime DepartureTime() {
+		return flightDepartureTime;
+	}
+	
+	/*
+	 * Mutator for the departure time of the flight
+	 * @param the departure time
+	 */
+	public void setDepartureTime(LocalTime newDepartureTime) {
+		flightDepartureTime = newDepartureTime;
+	}
+	
+	/*
+	 * Accessor for the seats available on the flight
+	 * @return number of seats available
+	 */
+	public int SeatsAvailable() {
+		return flightSeatsAvailable;
+	}
+	
+	/*
+	 * Mutator for the seats available of the flight
+	 * @param number of the seats available
+	 */
+	public void setSeatsAvailable(int newSeatsAvailable) {
+		if(newSeatsAvailable > 0) {
+			flightSeatsAvailable = newSeatsAvailable;
+		}
+		else {
+			flightSeatsAvailable = 0;
+		}
+	}
+}

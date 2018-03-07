@@ -1,0 +1,150 @@
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
+import java.util.LinkedHashMap;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.Part;
+
+/**
+ * Servlet implementation class RyanFlight Will allow the user to search for a
+ * flight
+ * 
+ * @author ryan.kelly5
+ */
+@WebServlet(description = "RyanFlightSearches", urlPatterns = { "/FlightSearch" })
+public class RyanFlightSearchServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+
+	// create a map to the flight search
+	private Map<Integer, RyanFlightSearch> flightSearchDatabase = new LinkedHashMap<>();
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String action = request.getParameter("action");
+		if (action == null)
+			action = "list";
+		switch (action) {
+		case "create":
+			this.showFlightSearch(response);
+			break;
+		
+		default:
+			this.showFlightSearch(response);
+			break;
+		}
+	}
+
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+
+		String action = request.getParameter("action");
+		if (action == null)
+			action = "list";
+		switch (action) {
+		case "create":
+//			this.createTicket(request, response);
+			break;
+		case "list":
+		default:
+			response.sendRedirect("tickets");
+			break;
+		}
+	}
+
+	private void showFlightSearch(HttpServletResponse response) throws ServletException, IOException {
+		PrintWriter writer = this.writeHeader(response);
+		
+		writer.append("<h3>Flight Search Form:</h3>\r\n");
+        writer.append("<form method=\"POST\" action=\"search\" ")
+              .append("enctype=\"multipart/form-data\">\r\n");
+        writer.append("<input type=\"hidden\" name=\"action\" ")
+              .append("value=\"create\"/>\r\n");
+        writer.append("Flight Departure<br/>\r\n");
+        writer.append("<input type=\"text\" name=\"customerName\"/><br/><br/>\r\n");
+        writer.append("Flight Destination<br/>\r\n");
+        writer.append("<input type=\"text\" name=\"subject\"/><br/><br/>\r\n");
+        writer.append("<b>Travel Date</b><br/>\r\n");
+        writer.append("<input type=\"date\" name=\"travel\"/><br/><br/>\r\n");
+        writer.append("<b>Passengers</b><br/>\r\n");
+        writer.append("<input type=\"number\" name=\"pass\" min=\"1\"/><br/><br/>\r\n");
+        writer.append("<input type=\"submit\" value=\"Submit\"/>\r\n");
+        writer.append("<a href=\"search\">Cancel this Form</a>\r\n");
+        writer.append("</form>\r\n");
+
+//		writer.append("<h2>Search for a Flight</h2>\r\n");
+//        writer.append("<form method=\"POST\" action=\"search\" ")
+//              .append(">\r\n");
+//        writer.append("<input type=\"hidden\" name=\"action\" ")
+//              .append("value=\"list\"/>\r\n");
+//        writer.append("Departing from:<br/>\r\n");
+//        writer.append("<input type=\"text\" list=\"flightSource\" name=\"departLocationName\"/><br/><br/>\r\n"); //list=\"flightSource\"
+//        writer.append("Arriving in:<br/>\r\n");
+//        writer.append("<input type=\"text\" list=\"flightDest\" name=\"arrivalLocationName\"/><br/><br/>\r\n"); // list=\"flightDest\" 
+//        writer.append("Departure Date:<br/>\r\n");
+//        writer.append("<input type=\"date\" name=\"departureDate\"/><br/><br/>\r\n");
+//        writer.append("Number of Tickets<br/>\r\n");
+//        writer.append("<select name=\"numberOfTickets\">");
+//        	writer.append("<option value=\"1\">1</option>");
+//        	writer.append("<option value=\"2\">2</option>");
+//        	writer.append("<option value=\"3\">3</option>");
+//        	writer.append("<option value=\"4\">4</option>");
+//        	writer.append("<option value=\"5\">5</option>");
+//        	writer.append("<option value=\"6\">6</option>");
+//        	writer.append("<option value=\"7\">7</option>");
+//        	writer.append("<option value=\"8\">8</option>");
+//        	writer.append("<option value=\"9\">9</option>");
+//        	writer.append("<option value=\"10\">10</option>");
+//        writer.append("</select>");
+//        writer.append("<br/><br/>\r\n");
+//        writer.append("<input type=\"submit\" value=\"Submit\"/>\r\n");
+//        
+//        //Build these out of the database later
+//        writer.append("<datalist id=\"flightSource\">");
+//        	writer.append("<option value=\"New York\">");
+//        writer.append("</datalist>");
+//        
+//        writer.append("<datalist id=\"flightDest\">");
+//        	writer.append("<option value=\"Paris\">");
+//        writer.append("</datalist>");
+//        writer.append("</form>\r\n");
+        this.writeFooter(writer);
+
+		this.writeFooter(writer);
+	}
+
+	
+
+	
+	
+
+	
+	private PrintWriter writeHeader(HttpServletResponse response) throws ServletException, IOException {
+		response.setContentType("text/html");
+		response.setCharacterEncoding("UTF-8");
+
+		PrintWriter writer = response.getWriter();
+		writer.append("<!DOCTYPE html>\r\n").append("<html>\r\n").append("    <head>\r\n")
+				.append("        <title>Customer Support</title>\r\n").append("    </head>\r\n")
+				.append("    <body>\r\n");
+
+		return writer;
+	}
+
+	private void writeFooter(PrintWriter writer) {
+		writer.append("    </body>\r\n").append("</html>\r\n");
+	}
+
+}
